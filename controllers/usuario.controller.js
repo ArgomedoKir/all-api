@@ -62,5 +62,27 @@ const verificarUsuario = async (req, res)=>{
 }
 
 
-module.exports = {verificarUsuario, crearUsuario} ;
+const obtenerInformacionUsuario = async (req, res)=> {
+
+    let {USU_ID} = req.body;
+    const query = 'SELECT USU_NOMBRES, USU_DNI, USU_APELLIDOS, USU_EMAIL, USU_ALIAS, USU_DIRECCION,' +
+	' USU_SEXO FROM usuarios'+
+    ' WHERE USU_ID = ?;';
+
+    mysql.query(query, [USU_ID], (err, result) => {
+        if(!err){
+            res.status(200).json({"status":200, result, "mensaje":"Las credenciales coinciden."});
+        }else{
+            res.status(500).json({"status":500,"mensaje":"Hubo un error con la consulta en la BD."});
+        }
+    });
+
+}
+
+
+const updateUsuario = async (req, res)=> {
+
+}
+
+module.exports = {verificarUsuario, crearUsuario, obtenerInformacionUsuario, updateUsuario} ;
 
